@@ -25,6 +25,7 @@ export const updateOrderStatus = async (
 interface CreateOrderDto {
   customerName: string;
   totalAmount: number;
+  userId: number;
 }
 
 export const createOrder = async (data: CreateOrderDto): Promise<Order> => {
@@ -35,6 +36,7 @@ export const createOrder = async (data: CreateOrderDto): Promise<Order> => {
       id: 0,
       customerName: data.customerName,
       totalAmount: data.totalAmount,
+      userId: data.userId,
       status: "Pending",
     } satisfies Order),
   });

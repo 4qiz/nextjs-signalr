@@ -21,6 +21,7 @@ const AdminPage = () => {
           <p>Имя: {order.customerName}</p>
           <p>Сумма: {order.totalAmount} ₽</p>
           <p>Статус: {order.status}</p>
+          <p>user id: {order.userId}</p>
           <div className="flex gap-3 ">
             <button onClick={() => handleStatusChange(order.id, "Confirmed")}>
               Подтвердить

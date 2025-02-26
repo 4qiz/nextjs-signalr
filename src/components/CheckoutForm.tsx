@@ -10,6 +10,8 @@ interface CheckoutFormProps {
 export const CheckoutForm = ({ onOrderCreated }: CheckoutFormProps) => {
   const [customerName, setCustomerName] = useState<string>("");
   const [totalAmount, setTotalAmount] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,12 +24,10 @@ export const CheckoutForm = ({ onOrderCreated }: CheckoutFormProps) => {
       const order = await createOrder({
         customerName,
         totalAmount: parseFloat(totalAmount),
+        userId: parseFloat(userId),
       });
 
       onOrderCreated?.(order); // Обновляем список заказов
-
-      setCustomerName("");
-      setTotalAmount("");
 
       redirect("/orders");
     } catch (err) {
@@ -52,6 +52,15 @@ export const CheckoutForm = ({ onOrderCreated }: CheckoutFormProps) => {
         placeholder="Сумма"
         value={totalAmount}
         onChange={(e) => setTotalAmount(e.target.value)}
+        required
+        min="1"
+        className="text-black"
+      />
+      <input
+        type="number"
+        placeholder="id"
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
         required
         min="1"
         className="text-black"

@@ -17,6 +17,7 @@ const OrdersPage = () => {
           <p>Имя: {order.customerName}</p>
           <p>Сумма: {order.totalAmount} ₽</p>
           <p>Статус: {order.status}</p>
+          <p>user id: {order.userId}</p>
         </div>
       ))}
     </div>

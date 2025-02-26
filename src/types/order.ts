@@ -5,4 +5,5 @@ export interface Order {
   customerName: string;
   totalAmount: number;
   status: OrderStatus;
+  userId: number;
 }
