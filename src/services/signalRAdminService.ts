@@ -1,21 +1,23 @@
 import * as signalR from "@microsoft/signalr";
 import { Order } from "@/types/order";
+import { adminJwt } from "@/hooks/useAdminOrders";
 
 const hubUrl = "http://localhost:5046/hubs/orders";
 
 let connection: signalR.HubConnection | null = null;
 
-export const getSignalRConnection = async (
-  token: string,
+export const getAdminSignalRConnection = async (
+  onNewOrder: (order: Order) => void,
   onOrderUpdated: (order: Order) => void
 ) => {
   if (!connection) {
     connection = new signalR.HubConnectionBuilder()
-      .withUrl(hubUrl, { accessTokenFactory: () => token })
+      .withUrl(hubUrl, { accessTokenFactory: () => adminJwt })
       .withAutomaticReconnect()
       .build();
 
-    connection.on("OrderUpdated", onOrderUpdated);
+    connection.on("NewOrderAdmin", onNewOrder);
+    connection.on("OrderUpdatedAdmin", onOrderUpdated);
 
     try {
       await connection.start();

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Order } from "@/types/order";
 import { createOrder } from "@/services/orderService";
 import { redirect } from "next/navigation";
+import { tokenJwt } from "@/hooks/useOrders";
 
 interface CheckoutFormProps {
   onOrderCreated?: (order: Order) => void;
@@ -21,7 +22,7 @@ export const CheckoutForm = ({ onOrderCreated }: CheckoutFormProps) => {
     setError(null);
 
     try {
-      const order = await createOrder({
+      const order = await createOrder(tokenJwt, {
         customerName,
         totalAmount: parseFloat(totalAmount),
         userId: parseFloat(userId),
@@ -31,6 +32,7 @@ export const CheckoutForm = ({ onOrderCreated }: CheckoutFormProps) => {
 
       redirect("/orders");
     } catch (err) {
+      console.log(err);
       setError("Ошибка при создании заказа. Попробуйте снова.");
     } finally {
       setLoading(false);

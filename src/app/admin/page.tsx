@@ -1,16 +1,16 @@
 "use client";
 
-import { useOrders } from "@/hooks/useOrders";
+import { adminJwt, useAdminOrders } from "@/hooks/useAdminOrders";
 import { updateOrderStatus } from "@/services/orderService";
 import { OrderStatus } from "@/types/order";
 
 export const dynamic = "force-dynamic";
 
 const AdminPage = () => {
-  const orders = useOrders();
+  const orders = useAdminOrders();
 
   const handleStatusChange = (id: number, status: OrderStatus) => {
-    updateOrderStatus(id, status).catch(console.error);
+    updateOrderStatus(adminJwt, id, status).catch(console.error);
   };
 
   return (
